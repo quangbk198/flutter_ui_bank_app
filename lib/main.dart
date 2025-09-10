@@ -1,6 +1,8 @@
 import 'package:bank_app_4/screen/login_screen.dart';
 import 'package:bank_app_4/screen/onboarding_screen.dart';
 import 'package:bank_app_4/screen/sign_up_screen.dart';
+import 'package:bank_app_4/utils/app_shared_preference.dart';
+import 'package:bank_app_4/utils/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -34,8 +36,17 @@ class MyApp extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: "/onboarding",
+  initialLocation: "/",
   routes: [
+    GoRoute(
+      path: "/",
+      redirect: (context, state) async {
+        bool seenOnboarding = await AppSharedPreferences.getBoolean(
+          Constants.SEEN_ONBOARDING,
+        );
+        return seenOnboarding ? "/login" : "/onboarding";
+      },
+    ),
     GoRoute(
       name: "onboarding_screen",
       path: "/onboarding",
@@ -51,8 +62,8 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: "/sign_up",
       name: "sign_up_screen",
+      path: "/sign_up",
       builder: (context, state) {
         return const SignUpScreen();
       },

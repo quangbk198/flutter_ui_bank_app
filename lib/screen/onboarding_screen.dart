@@ -1,3 +1,5 @@
+import 'package:bank_app_4/utils/app_shared_preference.dart';
+import 'package:bank_app_4/utils/constant.dart';
 import 'package:bank_app_4/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,7 +13,6 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
-
   final PageController _pageController = PageController();
 
   int _currentIndex = 0;
@@ -63,13 +64,22 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(24),
-              child: AppButton(onPressed: () {
-                if (_currentIndex < onboardingPages.length - 1) {
-                  _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
-                } else {
-                  context.goNamed("login_screen");
-                }
-              }, textButton: "Next"),
+              child: AppButton(
+                onPressed: () async {
+                  if (_currentIndex < onboardingPages.length - 1) {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  } else {
+                    await AppSharedPreferences.setBoolean(Constants.SEEN_ONBOARDING, true);
+                    if (!mounted) {
+                      context.goNamed("login_screen");
+                    }
+                  }
+                },
+                textButton: "Next",
+              ),
             ),
           ],
         ),
