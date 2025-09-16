@@ -1,3 +1,7 @@
+import 'package:bank_app_4/model/user.dart';
+import 'package:bank_app_4/utils/app_shared_preference.dart';
+import 'package:bank_app_4/utils/constant.dart';
+import 'package:bank_app_4/utils/snack_bar.dart';
 import 'package:bank_app_4/widgets/app_button.dart';
 import 'package:bank_app_4/widgets/app_text_field.dart';
 import 'package:bank_app_4/widgets/back_icon.dart';
@@ -18,6 +22,17 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    _getEmailLocal();
+  }
+
+  Future<void> _getEmailLocal() async {
+    final String email = await AppSharedPreferences.getString(Constants.KEY_EMAIL);
+    _emailController.text = email;
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -28,82 +43,109 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 22),
-                BackIcon(
-                  onClick: () {
-                    SystemNavigator.pop();
-                  },
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 46),
+              BackIcon(
+                onClick: () {
+                  SystemNavigator.pop();
+                },
+              ),
+              const SizedBox(height: 54),
+              const Text(
+                'Sign In',
+                style: TextStyle(
+                  color: Color(0xFF1E1E2D),
+                  fontSize: 32,
+                  fontWeight: FontWeight.w500,
                 ),
-                const SizedBox(height: 54),
-                const Text(
-                  'Sign In',
-                  style: TextStyle(
-                    color: Color(0xFF1E1E2D),
-                    fontSize: 32,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                const SizedBox(height: 38),
-                AppTextField(
-                  label: "Email Address",
-                  hint: "Enter email address",
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  iconLeft: "assets/ic_email.svg",
-                ),
-                const SizedBox(height: 21),
-                AppTextField(
-                  label: "Password",
-                  hint: "Enter password",
-                  controller: _passwordController,
-                  textInputAction: TextInputAction.done,
-                  isPassword: true,
-                  iconLeft: "assets/ic_password.svg",
-                ),
-                const SizedBox(height: 40),
-                AppButton(onPressed: () {}, textButton: "Sign In"),
-                const SizedBox(height: 29),
-                Center(
-                  child: RichText(
-                    text: TextSpan(
-                      text: "I'm a new user. ",
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFFA2A2A7),
-                        fontFamily: "Poppins",
-                      ),
-                      children: [
-                        TextSpan(
-                          text: "Sign Up",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Color(0xFF0066FF),
-                            fontFamily: "Poppins",
-                            fontWeight: FontWeight.w600,
-                            decoration: TextDecoration.underline,
-                          ),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                            context.pushNamed("sign_up_screen");
-                          }
-                        )
-                      ]
+              ),
+              const SizedBox(height: 38),
+              AppTextField(
+                label: "Email Address",
+                hint: "Enter email address",
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                iconLeft: "assets/ic_email.svg",
+              ),
+              const SizedBox(height: 21),
+              AppTextField(
+                label: "Password",
+                hint: "Enter password",
+                controller: _passwordController,
+                textInputAction: TextInputAction.done,
+                isPassword: true,
+                iconLeft: "assets/ic_password.svg",
+              ),
+              const SizedBox(height: 40),
+              AppButton(
+                onPressed: () {
+                  _startLogin(context);
+                },
+                textButton: "Sign In",
+              ),
+              const SizedBox(height: 29),
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "I'm a new user. ",
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFFA2A2A7),
+                      fontFamily: "Poppins",
                     ),
+                    children: [
+                      TextSpan(
+                        text: "Sign Up",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF0066FF),
+                          fontFamily: "Poppins",
+                          fontWeight: FontWeight.w600,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () async {
+                            final userSignUp = await context.pushNamed<User>("sign_up_screen");
+
+                            if (userSignUp != null) {
+                              _emailController.text = userSignUp.email;
+                              _passwordController.text = userSignUp.password;
+                            }
+                          },
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> _startLogin(BuildContext context) async {
+    final String email = _emailController.text;
+    final String pass = _passwordController.text;
+
+    final String emailLocal = await AppSharedPreferences.getString(Constants.KEY_EMAIL);
+    final String passLocal = await AppSharedPreferences.getString(Constants.KEY_PASSWORD);
+
+    if (email == emailLocal && pass == passLocal) {
+      if (mounted) {
+        context.goNamed("home_screen");
+      }
+    } else {
+      if (mounted) {
+        AppSnackBar.show(context: context, message: "Email or Password is incorrect!", onPressed: () {});
+      }
+    }
   }
 }

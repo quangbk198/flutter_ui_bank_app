@@ -11,4 +11,14 @@ class AppSharedPreferences {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool(key) ?? false;
   }
+
+  static Future<void> setString(String key, String value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
+  }
+
+  static Future<String> getString(String key) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key) ?? "";
+  }
 }

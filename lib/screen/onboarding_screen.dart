@@ -73,7 +73,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     );
                   } else {
                     await AppSharedPreferences.setBoolean(Constants.SEEN_ONBOARDING, true);
-                    if (!mounted) {
+                    if (mounted) {
                       context.goNamed("login_screen");
                     }
                   }
