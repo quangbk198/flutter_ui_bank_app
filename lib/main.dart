@@ -2,6 +2,7 @@ import 'package:bank_app_4/screen/home_screen.dart';
 import 'package:bank_app_4/screen/login_screen.dart';
 import 'package:bank_app_4/screen/onboarding_screen.dart';
 import 'package:bank_app_4/screen/sign_up_screen.dart';
+import 'package:bank_app_4/screen/splash_screen.dart';
 import 'package:bank_app_4/utils/app_shared_preference.dart';
 import 'package:bank_app_4/utils/constant.dart';
 import 'package:flutter/material.dart';
@@ -41,11 +42,8 @@ final GoRouter _router = GoRouter(
   routes: [
     GoRoute(
       path: "/",
-      redirect: (context, state) async {
-        bool seenOnboarding = await AppSharedPreferences.getBoolean(
-          Constants.SEEN_ONBOARDING,
-        );
-        return seenOnboarding ? "/login" : "/onboarding";
+      builder: (context, state) {
+        return const SplashScreen();
       },
     ),
     GoRoute(
