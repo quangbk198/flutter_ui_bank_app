@@ -24,11 +24,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
+    _passwordController.text = "zxcvbnm";
     _getEmailLocal();
   }
 
   Future<void> _getEmailLocal() async {
-    final String email = await AppSharedPreferences.getString(Constants.KEY_EMAIL);
+    final String email = await AppSharedPreferences.getString(
+      Constants.KEY_EMAIL,
+    );
     _emailController.text = email;
   }
 
@@ -112,7 +115,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
-                            final userSignUp = await context.pushNamed<User>("sign_up_screen");
+                            final userSignUp = await context.pushNamed<User>(
+                              "sign_up_screen",
+                            );
 
                             if (userSignUp != null) {
                               _emailController.text = userSignUp.email;
@@ -135,8 +140,12 @@ class _LoginScreenState extends State<LoginScreen> {
     final String email = _emailController.text;
     final String pass = _passwordController.text;
 
-    final String emailLocal = await AppSharedPreferences.getString(Constants.KEY_EMAIL);
-    final String passLocal = await AppSharedPreferences.getString(Constants.KEY_PASSWORD);
+    final String emailLocal = await AppSharedPreferences.getString(
+      Constants.KEY_EMAIL,
+    );
+    final String passLocal = await AppSharedPreferences.getString(
+      Constants.KEY_PASSWORD,
+    );
 
     if (email == emailLocal && pass == passLocal) {
       if (mounted) {
@@ -144,7 +153,11 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     } else {
       if (mounted) {
-        AppSnackBar.show(context: context, message: "Email or Password is incorrect!", onPressed: () {});
+        AppSnackBar.show(
+          context: context,
+          message: "Email or Password is incorrect!",
+          onPressed: () {},
+        );
       }
     }
   }
