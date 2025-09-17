@@ -8,14 +8,14 @@ import 'package:flutter_svg/svg.dart';
 
 import '../model/transaction_data.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomePageState extends State<HomePage> {
   String fullName = "";
   late final List<TransactionData> listTransaction;
 
@@ -41,7 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
+      TransactionData(
+        'assets/ic_apple.svg',
+        'Apple Store',
+        'Entertainment',
+        -233,
+      ),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
@@ -50,7 +55,12 @@ class _HomeScreenState extends State<HomeScreen> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
+      TransactionData(
+        'assets/ic_apple.svg',
+        'Apple Store',
+        'Entertainment',
+        -233,
+      ),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
@@ -59,7 +69,12 @@ class _HomeScreenState extends State<HomeScreen> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
+      TransactionData(
+        'assets/ic_apple.svg',
+        'Apple Store',
+        'Entertainment',
+        -233,
+      ),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
@@ -191,6 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }, childCount: listTransaction.length),
           ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
         ],
       ),
     );

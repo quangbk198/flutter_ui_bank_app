@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 40),
               AppButton(
                 onPressed: () {
-                  _startLogin(context);
+                  _startLogin();
                 },
                 textButton: "Sign In",
               ),
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<void> _startLogin(BuildContext context) async {
+  Future<void> _startLogin() async {
     final String email = _emailController.text;
     final String pass = _passwordController.text;
 
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (email == emailLocal && pass == passLocal) {
       if (mounted) {
-        context.goNamed("home_screen");
+        context.goNamed("main_screen");
       }
     } else {
       if (mounted) {

@@ -1,5 +1,6 @@
-import 'package:bank_app_4/screen/home_screen.dart';
+import 'package:bank_app_4/screen/home_page.dart';
 import 'package:bank_app_4/screen/login_screen.dart';
+import 'package:bank_app_4/screen/main_screen.dart';
 import 'package:bank_app_4/screen/onboarding_screen.dart';
 import 'package:bank_app_4/screen/sign_up_screen.dart';
 import 'package:bank_app_4/screen/splash_screen.dart';
@@ -68,10 +69,10 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: "/home",
-      name: "home_screen",
+      path: "/main",
+      name: "main_screen",
       builder: (context, state) {
-        return const HomeScreen();
+        return const MainScreen();
       },
     ),
   ],
