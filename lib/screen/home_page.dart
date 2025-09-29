@@ -41,12 +41,7 @@ class _HomePageState extends State<HomePage> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData(
-        'assets/ic_apple.svg',
-        'Apple Store',
-        'Entertainment',
-        -233,
-      ),
+      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
@@ -55,12 +50,7 @@ class _HomePageState extends State<HomePage> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData(
-        'assets/ic_apple.svg',
-        'Apple Store',
-        'Entertainment',
-        -233,
-      ),
+      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
@@ -69,12 +59,7 @@ class _HomePageState extends State<HomePage> {
       TransactionData('assets/ic_spotify.svg', 'Spotify', 'Music', 199),
     );
     listData.add(
-      TransactionData(
-        'assets/ic_apple.svg',
-        'Apple Store',
-        'Entertainment',
-        -233,
-      ),
+      TransactionData('assets/ic_apple.svg', 'Apple Store', 'Entertainment', -233),
     );
     listData.add(
       TransactionData('assets/ic_grocery.svg', 'Shopping', 'Buy', -25),
